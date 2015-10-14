@@ -1,0 +1,24 @@
+create external table user_soft_rawdata (
+rawdata string
+)
+partitioned by(dt string) 
+row format delimited 
+fields terminated by '\t';
+load data local inpath '/root/yankun/user_software2_1.csv' overwrite into table user_soft_rawdata partition (dt='2015-10-15');
+
+create external table software_short_name (
+uid string,
+suid string
+)
+partitioned by(dt string) 
+row format delimited 
+fields terminated by ',';
+load data local inpath '/root/yankun/software_short_name.csv' overwrite into table software_short_name partition (dt='2015-10-15');
+
+# create udf
+add jar /root/yankun/mongdb_yac_etl-0.0.1-SNAPSHOT.jar;
+create temporary function raw_etl as 'hive.udf.RawDataETLUDF'; 
+
+### delete partition
+ALTER TABLE user_soft_rawdata DROP IF EXISTS PARTITION (dt='2015-10-15');
+ALTER TABLE software_short_name DROP IF EXISTS PARTITION (dt='2015-10-15');
