@@ -22,3 +22,29 @@ create temporary function raw_etl as 'hive.udf.RawDataETLUDF';
 ### delete partition
 ALTER TABLE user_soft_rawdata DROP IF EXISTS PARTITION (dt='2015-10-15');
 ALTER TABLE software_short_name DROP IF EXISTS PARTITION (dt='2015-10-15');
+
+### add partition
+ALTER TABLE user_soft ADD PARTITION (dt = '2015-10-15');
+
+###
+CREATE external TABLE user_soft(
+uid STRING,
+date STRING,
+nation STRING,
+version STRING,
+atrr4 STRING,
+atrr5 STRING,
+sid ARRAY<STRING>
+)
+partitioned by(dt string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+COLLECTION ITEMS TERMINATED BY '#';
+
+##
+#INSERT OVERWRITE TABLE user_soft PARTITION (dt='2015-10-15') select raw_etl(rawdata) from user_soft_rawdata limit 10;
+insert overwrite directory '/user/hive/warehouse/user_soft/dt=2015-10-15' select raw_etl(rawdata) from user_soft_rawdata ;
+
+# relase memory
+sync;
+echo 3 > /proc/sys/vm/drop_caches;
