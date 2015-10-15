@@ -15,9 +15,6 @@ row format delimited
 fields terminated by ',';
 load data local inpath '/root/yankun/software_short_name.csv' overwrite into table software_short_name partition (dt='2015-10-15');
 
-# create udf
-add jar /root/yankun/mongdb_yac_etl-0.0.1-SNAPSHOT.jar;
-create temporary function raw_etl as 'hive.udf.RawDataETLUDF'; 
 
 ### delete partition
 ALTER TABLE user_soft_rawdata DROP IF EXISTS PARTITION (dt='2015-10-15');
@@ -44,6 +41,11 @@ COLLECTION ITEMS TERMINATED BY '#';
 ##
 #INSERT OVERWRITE TABLE user_soft PARTITION (dt='2015-10-15') select raw_etl(rawdata) from user_soft_rawdata limit 10;
 insert overwrite directory '/user/hive/warehouse/user_soft/dt=2015-10-15' select raw_etl(rawdata) from user_soft_rawdata ;
+
+
+# create udf
+add jar /root/yankun/mongdb_yac_etl-0.0.1-SNAPSHOT.jar;
+create temporary function raw_etl as 'hive.udf.RawDataETLUDF'; 
 
 # relase memory
 sync;
