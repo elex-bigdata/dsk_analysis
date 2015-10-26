@@ -11,7 +11,7 @@ import org.apache.hadoop.io.Text;
 /**
  * @author yanbit
  * @date Oct 14, 2015 1:56:48 PM
- * @todo proccess data
+ * @todo proccess data demo
  * 
  *       ########type1######## // String line = //
  *       "cccccd9ce28327708b3526091d315b40,\"[1410610181,\"\"Poland\"\",\"\"4.9.54\"\",\"\"1\"\",0]\",\"[17897.0,8.0,98.0,1203.0,2203.0,9680.0,88.0,19.0,104.0,18.0,21.0,"
