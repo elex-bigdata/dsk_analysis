@@ -53,7 +53,10 @@ from upusers_json_etl t  ;
 
 #######################################数据导入hbase#####################################################
 #创建hbase分区表
-create 'upusers', 'f', {NUMREGIONS => 100, SPLITALGO => 'HexStringSplit'}
+create 'upusers',{NAME => 'f',NUMREGIONS => 100, SPLITALGO => 'HexStringSplit'}
+disable 'upusers'
+alter 'upusers', NAME => 'f', COMPRESSION => 'snappy'
+enable 'upusers'
 
 #生成HFile
 sudo -u hdfs hadoop fs -rmr hdfs://namenode:8020/tmp/hbase/bulkload/upusers
