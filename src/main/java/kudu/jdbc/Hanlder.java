@@ -8,5 +8,5 @@ import java.sql.ResultSet;
  * @todo TODO
  */
 public interface Hanlder {
-  public void process(ResultSet rs);
+  public Object process(ResultSet rs);
 }

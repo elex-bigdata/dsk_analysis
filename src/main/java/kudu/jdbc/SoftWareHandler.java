@@ -9,20 +9,22 @@ import java.sql.SQLException;
  * @todo TODO
  */
 public class SoftWareHandler implements Hanlder {
-
-  StringBuffer sb = new StringBuffer();
-
-  public void process(ResultSet rs) {
+  
+  public Object process(ResultSet rs) {
+    StringBuffer sb = new StringBuffer();
     try {
       while (rs.next()) {
         sb.append("(\\\\b");
         sb.append(rs.getString(1));
         sb.append("\\\\b)|");
       }
-      sb.substring(0, sb.length() - 1);
-      System.out.println(sb.toString());
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    if (sb.length()!=0) {
+      return sb.substring(0, sb.length() - 1);
+    }
+    return sb;
+    //return sb.toString();
   }
 }
