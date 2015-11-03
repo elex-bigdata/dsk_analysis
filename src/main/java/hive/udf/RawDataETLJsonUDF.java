@@ -56,7 +56,9 @@ public class RawDataETLJsonUDF extends UDF {
     Text nline = null;
     try {
       nline = new Text();
-      String line = s.toString();
+      String line = s.toString().replace(",{\"$undefined\":true}", "")
+          .replace("{\"$undefined\":true},", "")
+          .replace("{\"$undefined\":true}", "");
       StringBuffer sb = new StringBuffer();
       JsonParser parser = new JsonParser();
       JsonElement jparse = parser.parse(line);
@@ -69,20 +71,31 @@ public class RawDataETLJsonUDF extends UDF {
             JsonArray jsonArray = attr.getAsJsonArray();
             for (int i = 0; i < jsonArray.size(); i++) {
               if (i == 0) {
-                sb.append(jsonArray.get(i).getAsBigDecimal().stripTrailingZeros()
-                    .toPlainString()).append(",");
+                sb.append(jsonArray.get(i).getAsBigDecimal()
+                    .stripTrailingZeros().toPlainString()).append(",");
               } else {
-                sb.append(jsonArray.get(i).getAsString()).append(",");
+                JsonElement json = jsonArray.get(i);
+                if (json.isJsonNull()) {
+                  sb.append(",");
+                } else {
+                  sb.append(jsonArray.get(i).getAsString()).append(",");
+                }
+
               }
             }
           }
           JsonElement items = jobject.get("items");
           if (items.isJsonArray()) {
             JsonArray jsonArray = items.getAsJsonArray();
-            for (int i = 0; i < jsonArray.size(); i++) {
-              sb.append(new Float(jsonArray.get(i).getAsFloat()).intValue())
-                  .append("#");
+            if (jsonArray.size() != 0) {
+              for (int i = 0; i < jsonArray.size(); i++) {
+                sb.append(new Float(jsonArray.get(i).getAsFloat()).intValue())
+                    .append("#");
+              }
+            } else {
+              sb.append(",");
             }
+
           }
         } catch (JsonSyntaxException e) {
           LOG.error("process attr:[]" + s);
@@ -92,15 +105,20 @@ public class RawDataETLJsonUDF extends UDF {
       } else {
         try {
           for (int i = 0; i < 5; i++) {
-            sb.append(jobject.get("attr").getAsJsonObject().get(String.valueOf(i))
-                .toString().replace("\"", "")).append(",");
+            sb.append(jobject.get("attr").getAsJsonObject()
+                .get(String.valueOf(i)).toString().replace("\"", ""))
+                .append(",");
           }
           JsonElement items = jobject.get("items");
           if (items.isJsonArray()) {
             JsonArray jsonArray = items.getAsJsonArray();
-            for (int i = 0; i < jsonArray.size(); i++) {
-              sb.append(jsonArray.get(i).getAsBigDecimal().stripTrailingZeros()
-                  .toPlainString()).append("#");
+            if (jsonArray.size() != 0) {
+              for (int i = 0; i < jsonArray.size(); i++) {
+                sb.append(jsonArray.get(i).getAsBigDecimal()
+                    .stripTrailingZeros().toPlainString()).append("#");
+              }
+            } else {
+              sb.append(",");
             }
           }
         } catch (Exception e) {
@@ -119,7 +137,7 @@ public class RawDataETLJsonUDF extends UDF {
   public static void main(String[] args) {
     RawDataETLJsonUDF j = new RawDataETLJsonUDF();
     Text result1 = j.evaluate(new Text(
-        "{\"_id\":\"19999ad75f4e14d2e0d30c4e8eec5263\",\"attr\":[1.409664977e+09,\"Spain\",\"4.4.51\",\"2\",0],\"items\":[973.0,65.0,66.0,745.0,282.0,383.0,9326.0,10286.0,270.0,215.0,6220.0,154.0,20347.0,78.0,524.0,43.0,3401.0,1784.0,1572.0,1903.0,966.0,897.0,853.0,14929.0,10478.0,7088.0,14368.0,1841.0,111.0,3066.0,72.0,4.0,12325.0]}"));
+        "{\"_id\":\"19999ad75f4e14d2e0d30c4e8eec5263\",\"attr\":[1.409664977e+09,null,null,null,0],\"items\":[{\"$undefined\":true}]}"));
     Text result2 = j.evaluate(new Text(
         "{\"_id\":\"cccccd3dc26f029459b78c8885b794b6\",\"attr\":{\"0\":1441555507,\"1\":\"Russia\",\"2\":\"6.3.81\",\"3\":\"2\",\"4\":0},\"items\":[281246e+06,1.747288e+06,8.0,8.0,418.0,457.0,249.0,1994.0,1165.0,127351.0,5308.0,3.040267e+06,3.040267e+06,3.040267e+06,3.040267e+06,3.040267e+06,3.040267e+06,243.0,5089.0,1.0,21351.0,1.747288e+06,1.747288e+06,1.747288e+06,1.747288e+06,1.747288e+06,1.747288e+06,1.747288e+06,1.747288e+06,1.747288e+06,1.747288e+06,1.747288e+06,1.747288e+06,1.747288e+06,1.747288e+06,1.747288e+06,179362.0,20.0,1.710202e+06,10450.0,1.697998e+06,330.0,487.0,221996.0,1.110922e+06,3.212131e+06,1.834961e+06,15592.0,245.0,243.0,2684.0,4.490459e+06,4.587957e+06,1774.0,20798.0,549.0,38148.0,2.235279e+06,54.0,1491.0,1491.0,1036.0,1.0,1.0,1.0,1112.0,1.0,1.0,44.0,1.0,1.0,1.0,39.0,1.0,95277.0,1342.0,5886.0,17.0,40.0,1.0,162.0,1.0,1.0,2599.0,1.0,1.0,172.0,5886.0,319.0,28.0,27.0,31.0,29.0,3.0,3.0,3.0,3.0,25.0,24.0,1.0,104.0,1.0,1.0,1.0,1.0,3.239752e+06,1.0,1.0,8791.0,1.0,1.0,1.0,1.0,362.0,1.0,344111.0,146395.0,252.0,118.0,1913.0,1972.0,71.0,1036.0,4724.0,44.0,1.0,1.0,55198.0,1.0,1.0,1.0,1.281246e+06,1.0,104.0,84.0,55.0,1.281246e+06,7867.0,8034.0,9315.0,164.0,24795.0,63130.0]}"));
     System.out.println(result1.toString());
