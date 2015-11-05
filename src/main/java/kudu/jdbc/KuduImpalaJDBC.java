@@ -10,7 +10,7 @@ import java.sql.Statement;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import kudu.jdbc.hanlder.SingleResultHanlder;
+import kudu.jdbc.hanlder.CountHanlder;
 
 /**
  * @author yanbit
@@ -84,21 +84,16 @@ public class KuduImpalaJDBC {
       System.out.println(o);
       if (o != null) {
         Object allCount = query("select count(1) from user_software_kudu",
-            new SingleResultHanlder());
+            new CountHanlder());
         Object baiduCount =
             query("select count(1) from user_software_kudu where items RLIKE '"
-                + o + "'", new SingleResultHanlder());
+                + o + "'", new CountHanlder());
         Double all = Double.valueOf((String) allCount);
         Double baidu = Double.valueOf((String) baiduCount);
         System.out.println("=============result===============");
-        String result = formatPercent(((double)baidu/(double)all),2);
+        String result = formatPercent(((double) baidu / (double) all), 2);
         System.out.println(result);
       }
-      // Object o2 = query(
-      // "select \"baidu\",count(1) from user_software_kudu where items RLIKE
-      // '"+o+"'",
-      // new PrintHanlder());
-
     } catch (Exception e) {
       e.printStackTrace();
     }

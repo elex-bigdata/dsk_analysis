@@ -10,17 +10,16 @@ import kudu.jdbc.Hanlder;
  * @date Nov 3, 2015 5:37:07 PM
  * @todo TODO
  */
-public class SingleResultHanlder implements Hanlder {
-  public Object process(ResultSet rs) {
-    Object count =null;
+public class CountHanlder implements Hanlder {
+  public Double process(ResultSet rs) {
+    Double count =null;
     try {
       while (rs.next()) {
-        count = rs.getString(1);
+        count = Double.valueOf(rs.getString(1));
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    System.out.println("count:----------------"+count);
     return count;
   }
 }

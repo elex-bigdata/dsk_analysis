@@ -7,6 +7,6 @@ import java.sql.ResultSet;
  * @date Nov 3, 2015 3:55:22 PM
  * @todo TODO
  */
-public interface Hanlder {
-  public Object process(ResultSet rs);
+public interface Hanlder<T> {
+  public T process(ResultSet rs);
 }
