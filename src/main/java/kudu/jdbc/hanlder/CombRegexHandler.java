@@ -1,4 +1,4 @@
-package kudu.jdbc;
+package kudu.jdbc.hanlder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
  * @date Nov 3, 2015 3:56:35 PM
  * @todo TODO
  */
-public class SoftWareHandler implements Hanlder {
+public class CombRegexHandler implements Hanlder {
 
   public String process(ResultSet rs) {
     StringBuffer sb = new StringBuffer();
@@ -25,6 +25,5 @@ public class SoftWareHandler implements Hanlder {
       return sb.substring(0, sb.length() - 1);
     }
     return sb.toString();
-    // return sb.toString();
   }
 }

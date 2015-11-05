@@ -3,8 +3,6 @@ package kudu.jdbc.hanlder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import kudu.jdbc.Hanlder;
-
 /**
  * @author yanbit
  * @date Nov 3, 2015 5:37:07 PM

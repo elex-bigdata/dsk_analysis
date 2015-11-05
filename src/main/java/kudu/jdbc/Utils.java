@@ -9,23 +9,42 @@ import java.util.Properties;
  * @date Nov 3, 2015 3:43:15 PM
  * @todo TODO
  */
-public class LoadConf {
+public class Utils {
+
   private static final String CONNECTION_URL_PROPERTY = "connection.url";
   private static final String JDBC_DRIVER_NAME_PROPERTY =
       "jdbc.driver.class.name";
 
   public static String connectionUrl;
   public static String jdbcDriverName;
-  
-  static{
+
+  static {
     try {
       loadConfiguration();
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
-      
 
+  /**
+   * 
+   * format double to 0.00%
+   * 
+   * @param number
+   * @param newValue
+   * @return
+   */
+  public static String formatPercent(double number, int newValue) {
+    java.text.NumberFormat nf = java.text.NumberFormat.getPercentInstance();
+    nf.setMinimumFractionDigits(newValue);
+    return nf.format(number);
+  }
+
+  /**
+   * load kudu properties
+   * 
+   * @throws IOException
+   */
   public static void loadConfiguration() throws IOException {
     InputStream input = null;
     try {
