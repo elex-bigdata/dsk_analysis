@@ -1,0 +1,49 @@
+########################################test env install########################################
+
+1.下载Storm软件包
+http://storm.apache.org/downloads.html
+sudo wget http://apache.dataguru.cn/storm/apache-storm-0.10.0/apache-storm-0.10.0.tar.gz
+
+2.解压软件包
+sudo tar -zxvf apache-storm-0.10.0.tar.gz
+
+3.创建相关目录 logs local
+sudo mkdir -p /opt/apache-storm-0.10.0/logs
+sudo chown -R hadoop:hadoop /opt/apache-storm-0.10.0
+sudo mkdir -p /home/data/storm/localdir/
+sudo chown hadoop:hadoop -R /home/data/storm/
+
+4.修改环境变量
+sudo vim /etc/profile.d/hadoop.sh 
+
+JAVA_HOME=/usr/java/jdk1.7.0_67-cloudera
+JRE_HOME=/usr/java/jdk1.7.0_67-cloudera
+STORM_HOME=/opt/apache-storm-0.10.0
+PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$STORM_HOME/bin
+CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
+export JAVA_HOME JRE_HOME PATH CLASSPATH
+
+source /etc/profile
+
+5.修改配置文件 storm.yaml
+########### These MUST be filled in for a storm configuration
+ storm.zookeeper.servers:
+     - "datanode1"
+     - "datanode2"
+     - "datanode4"
+# 
+ nimbus.host: "namenode"
+ storm.local.dir: "/home/data/storm/localdir/"
+ supervisor.slots.ports:
+     - 6700
+     - 6701
+storm.local.dir: "/home/data/storm/localdir/"
+
+6.
+6.1 启动storm nimbus
+nohup storm nimbus >> /opt/apache-storm-0.10.0/logs/nimbus.out 2>&1 &
+nohup storm ui >> /opt/apache-storm-0.10.0/logs/ui.out 2>&1 &
+nohup storm logviewer >> /opt/apache-storm-0.10.0/logs/logviewer.out 2>&1 &
+
+6.2 启动storm supervisor
+nohup storm supervisor >> /opt/apache-storm-0.10.0/logs/supervisor.out 2>&1 &

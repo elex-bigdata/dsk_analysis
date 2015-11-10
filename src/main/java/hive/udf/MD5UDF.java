@@ -6,7 +6,6 @@ import org.apache.hadoop.io.Text;
 import com.google.common.base.Charsets;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.Hashing;
-import com.jcraft.jsch.jce.MD5;
 
 /**
  * @author yanbit
@@ -19,7 +18,7 @@ public class MD5UDF extends UDF {
 
   /**
    * gen md5 string
-   * @param line
+   * @param lineexplain select a.ptid from upusers_attr_kudu a join upusers_days_kudu d on(a.mid=d.mid) where  a.ptid='isafe' and d.day>= '20151001' and d.day <= '20151003'  ;
    * @return
    */
   public Text evaluate(Text line) {
@@ -29,6 +28,4 @@ public class MD5UDF extends UDF {
     md5line.set(hashCode.toString());
     return md5line;
   }
-  
-  
 }
