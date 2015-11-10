@@ -39,7 +39,6 @@
 			<version>1.1.0</version>
 		</dependency>
 		<!-- storm jar-->
-
 	</dependencies>
 
 
@@ -60,8 +59,8 @@
                             <mainClass></mainClass>
                         </manifest>
                     </archive>
-
                 </configuration>
+
                 <executions>
                     <execution>
                         <id>make-assembly</id>
