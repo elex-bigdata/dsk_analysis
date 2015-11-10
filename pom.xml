@@ -40,7 +40,13 @@
 			<artifactId>storm-core</artifactId>
 			<version>0.10.0</version>
 		</dependency>
-		<dependency>
+        <dependency>
+            <groupId>org.apache.storm</groupId>
+            <artifactId>storm-kafka</artifactId>
+            <version>0.10.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka_2.10</artifactId>
             <version>0.8.2.0</version>
