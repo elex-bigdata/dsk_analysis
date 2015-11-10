@@ -1,4 +1,4 @@
-package storm.test;
+package test;
 
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
