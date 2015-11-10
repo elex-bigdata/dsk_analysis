@@ -16,6 +16,7 @@
             <groupId>org.apache.storm</groupId>
             <artifactId>storm-core</artifactId>
             <version>0.10.0</version>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.logging.log4j</groupId>
@@ -43,7 +44,6 @@
             <groupId>org.apache.storm</groupId>
             <artifactId>storm-kafka</artifactId>
             <version>0.10.0</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
