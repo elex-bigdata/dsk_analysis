@@ -28,7 +28,7 @@ public class SKTest {
     public static void main(String[] args) throws InvalidTopologyException, AuthorizationException, AlreadyAliveException {
 
         TopologyBuilder builder = new TopologyBuilder();
-        BrokerHosts hosts = new ZkHosts("datanode1:2181,datanode2:2181,datanode3:2181");
+        BrokerHosts hosts = new ZkHosts("datanode1:2181,datanode2:2181,datanode4:2181");
         String topic = "topic1";
         String zkRoot = "/kafkaspout";
         String id = UUID.randomUUID().toString();
