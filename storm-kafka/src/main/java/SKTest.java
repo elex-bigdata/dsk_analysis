@@ -1,24 +1,14 @@
-package test;
-
 import backtype.storm.Config;
-import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
 import backtype.storm.generated.AlreadyAliveException;
 import backtype.storm.generated.AuthorizationException;
 import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.topology.TopologyBuilder;
-import backtype.storm.tuple.Fields;
-import backtype.storm.tuple.Values;
 import storm.kafka.BrokerHosts;
 import storm.kafka.KafkaSpout;
 import storm.kafka.SpoutConfig;
 import storm.kafka.ZkHosts;
-import storm.kafka.bolt.KafkaBolt;
-import storm.kafka.bolt.mapper.FieldNameBasedTupleToKafkaMapper;
-import storm.kafka.bolt.selector.DefaultTopicSelector;
-import storm.trident.testing.FixedBatchSpout;
 
-import java.util.Properties;
 import java.util.UUID;
 
 /**
