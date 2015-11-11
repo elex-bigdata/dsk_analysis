@@ -17,6 +17,7 @@ public class LogFilterBolt extends BaseRichBolt {
     @Override
     public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
         this.collector = outputCollector;
+
     }
 
     @Override
