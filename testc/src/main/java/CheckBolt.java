@@ -37,10 +37,12 @@ public class CheckBolt implements IBasicBolt {
   }
 
   public void cleanup() {
+
   }
 
   public Map<String, Object> getComponentConfiguration() {
     return null;
+
   }
 
 }

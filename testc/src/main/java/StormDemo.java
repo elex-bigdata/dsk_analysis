@@ -5,6 +5,7 @@ import backtype.storm.generated.AuthorizationException;
 import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.spout.SchemeAsMultiScheme;
 import backtype.storm.topology.TopologyBuilder;
+import storm.kafka.*;
 import storm.kafka.bolt.KafkaBolt;
 
 import java.util.Properties;
