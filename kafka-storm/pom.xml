@@ -39,8 +39,8 @@
                     <artifactId>slf4j-api</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
+                    <groupId>org.apache.storm</groupId>
+                    <artifactId>storm-core</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
