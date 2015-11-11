@@ -46,6 +46,7 @@ public class StormDemo {
 
     Config conf = new Config();
 
+    //out
     // set producer properties.
     Properties props = new Properties();
     props.put("metadata.broker.list",
