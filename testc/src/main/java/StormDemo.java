@@ -5,7 +5,6 @@ import backtype.storm.generated.AuthorizationException;
 import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.spout.SchemeAsMultiScheme;
 import backtype.storm.topology.TopologyBuilder;
-import storm.kafka.*;
 import storm.kafka.bolt.KafkaBolt;
 
 import java.util.Properties;
@@ -32,10 +31,10 @@ public class StormDemo {
     KafkaSpout kafkaSpout = new KafkaSpout(spoutConfig);
 
     // set kafka spout
-    builder.setSpout("kafka_spout", kafkaSpout, 1);
+    builder.setSpout("kafka_spout", kafkaSpout, 4);
 
     // set bolt
-    builder.setBolt("check", new CheckBolt(), 1).shuffleGrouping("kafka_spout");
+    builder.setBolt("check", new CheckBolt(), 8).shuffleGrouping("kafka_spout");
     // builder.setBolt("filter", new FilterShellBolt(),
     // 8).shuffleGrouping("kafka_spout");
 
@@ -55,7 +54,7 @@ public class StormDemo {
     props.put("serializer.class", "kafka.serializer.StringEncoder");
     conf.put(KafkaBolt.KAFKA_BROKER_PROPERTIES, props);
 
-    conf.setNumWorkers(1);
+    conf.setNumWorkers(2);
     StormSubmitter.submitTopologyWithProgressBar("logfilter", conf,
         builder.createTopology());
 

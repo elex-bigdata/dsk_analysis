@@ -24,12 +24,16 @@ public class CheckBolt implements IBasicBolt {
   }
 
   public void execute(Tuple input, BasicOutputCollector collector) {
-    String fields = input.getString(0);
-    if (fields.split(",").length != 2) {
-      System.out.println("==============WARN:" + fields);
+    try {
+      String fields = input.getString(0);
+      if (fields.split(",").length != 2) {
+        System.out.println("==============WARN:" + fields);
+      }
+      System.out.println("=============fields:" + fields);
+      collector.emit(new Values(fields));
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-    System.out.println("=============fields:" + fields);
-    collector.emit(new Values(fields));
   }
 
   public void cleanup() {
