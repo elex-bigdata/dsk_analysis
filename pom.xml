@@ -5,9 +5,6 @@
 	<artifactId>dsk_analysis</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <modules>
-        <module>storm-kafka</module>
-    </modules>
     <name>dsk_analysis</name>
 	<description>dsk_analysis</description>
 
