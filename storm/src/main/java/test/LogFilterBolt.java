@@ -22,8 +22,9 @@ public class LogFilterBolt extends BaseRichBolt {
     @Override
     public void execute(Tuple tuple) {
         try {
-            byte[] binaryByField = tuple.getBinaryByField("bytes");
-            String value = new String(binaryByField);
+//            byte[] binaryByField = tuple.getBinaryByField("bytes");
+//            String value = new String(binaryByField);
+            String value = tuple.getString(0);
             System.out.println(value);
             this.collector.ack(tuple);
         } catch (Exception e) {
